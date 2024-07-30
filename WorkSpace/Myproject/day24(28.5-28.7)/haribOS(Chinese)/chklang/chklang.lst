@@ -1,0 +1,52 @@
+     1 00000000                                 [FORMAT "WCOFF"]
+     2 00000000                                 [INSTRSET "i486p"]
+     3 00000000                                 [OPTIMIZE 1]
+     4 00000000                                 [OPTION 1]
+     5 00000000                                 [BITS 32]
+     6 00000000                                 	EXTERN	_api_getlang
+     7 00000000                                 	EXTERN	_api_end
+     8 00000000                                 	EXTERN	_api_putstr0
+     9 00000000                                 [FILE "chklang.c"]
+    10                                          [SECTION .data]
+    11 00000000                                 LC0:
+    12 00000000 45 6E 67 6C 69 73 68 20 41 53   	DB	"English ASCII mode",0x0A,0x00
+       0000000A 43 49 49 20 6D 6F 64 65 0A 00 
+    13 00000014                                 LC1:
+    14 00000014 43 68 69 6E 65 73 65 20 47 42   	DB	"Chinese GB2312 mode",0x0A,0x00
+       0000001E 32 33 31 32 20 6D 6F 64 65 0A 
+       00000028 00 
+    15                                          [SECTION .text]
+    16 00000000                                 	GLOBAL	_HariMain
+    17 00000000                                 _HariMain:
+    18 00000000 55                              	PUSH	EBP
+    19 00000001 89 E5                           	MOV	EBP,ESP
+    20 00000003 53                              	PUSH	EBX
+    21 00000004 E8 [00000000]                   	CALL	_api_getlang
+    22 00000009 89 C3                           	MOV	EBX,EAX
+    23 0000000B 85 C0                           	TEST	EAX,EAX
+    24 0000000D 74 2D                           	JE	L5
+    25 0000000F                                 L2:
+    26 0000000F 83 FB 01                        	CMP	EBX,1
+    27 00000012 74 1B                           	JE	L6
+    28 00000014                                 L3:
+    29 00000014 83 FB 02                        	CMP	EBX,2
+    30 00000017 74 09                           	JE	L7
+    31 00000019                                 L4:
+    32 00000019 8B 5D FC                        	MOV	EBX,DWORD [-4+EBP]
+    33 0000001C C9                              	LEAVE
+    34 0000001D E9 [00000000]                   	JMP	_api_end
+    35 00000022                                 L7:
+    36 00000022 68 [00000000]                   	PUSH	LC0
+    37 00000027 E8 [00000000]                   	CALL	_api_putstr0
+    38 0000002C 58                              	POP	EAX
+    39 0000002D EB EA                           	JMP	L4
+    40 0000002F                                 L6:
+    41 0000002F 68 [00000014]                   	PUSH	LC1
+    42 00000034 E8 [00000000]                   	CALL	_api_putstr0
+    43 00000039 5A                              	POP	EDX
+    44 0000003A EB D8                           	JMP	L3
+    45 0000003C                                 L5:
+    46 0000003C 68 [00000000]                   	PUSH	LC0
+    47 00000041 E8 [00000000]                   	CALL	_api_putstr0
+    48 00000046 59                              	POP	ECX
+    49 00000047 EB C6                           	JMP	L2

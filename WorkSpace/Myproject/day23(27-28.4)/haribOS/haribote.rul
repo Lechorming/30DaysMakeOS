@@ -1,0 +1,18 @@
+format:
+	/* 本章节描述链接策略 */
+	code(align:1, logic:0x24,      file:0x24);
+	data(align:4, logic:stack_end, file:code_end);
+
+file:
+	/* 记载了在命令行上写不完的.obj文件、.lib文件 */
+	/* 另外，也可以用绝对路径写。 */
+	/* 例：  c:/osask/gg00libc.lib;  */
+	../../z_tools/haribote/harilibc.lib;
+	../../z_tools/haribote/golibc.lib;
+
+label:
+	/* 指示一定要链接的标签 */
+	/* 指定入口点就可以了 */
+	_HariStartup;
+
+	/* 上述三个章节的顺序不能更换! */

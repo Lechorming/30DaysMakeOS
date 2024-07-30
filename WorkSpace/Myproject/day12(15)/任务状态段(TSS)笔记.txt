@@ -1,0 +1,23 @@
+任务状态段(task status segment)TSS:
+    文字定义:TSS也是内存段的一种，需要在GDT中进行定义后使用。
+    代码定义(分16位和32位版本, 下为32位):
+        struct TSS32 {
+            int backlink, esp0, ss0, esp1, ss1, esp2, ss2, cr3;
+            int eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;
+            int es, cs, ss, ds, fs, gs;
+            int ldtr, iomap;
+        };
+    详解: 
+        共26个int, 104字节;
+        保存的不是CPU寄存器, 而是与任务设置相关的信息, 任务切换时不会被写入(除backlink有时会被写入);
+
+
+    成员详解:
+
+        eip:
+            记录CPU下一条需要执行的指令在内存中的地址;
+
+        ldtr:
+            未知, 暂时设置为0;
+        iomap:
+            未知, 暂时设置为0x400000000;

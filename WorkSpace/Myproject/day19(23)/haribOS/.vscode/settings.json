@@ -1,0 +1,10 @@
+{
+    "files.exclude": {
+        "**/*.bim": true,
+        "**/*.bin": true,
+        "**/*.gas": true,
+        "**/*.lst": true,
+        "**/*.map": true,
+        "**/*.obj": true
+    }
+}

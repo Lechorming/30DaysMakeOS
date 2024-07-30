@@ -1,0 +1,13 @@
+0. 修改了ipl10.nas
+1. 给命令行增加了type [FileName.Ext] 命令;
+2. 增加了对FAT的支持, 通过读取磁盘的FAT, 获取分块文件的所有地址;
+3. 整理了bootpack.c的源代码，拆分出了window.c, console.c, file.c;
+4. 增加了第一个终端应用程序hello.hrb, 通过在终端输入文件名执行该文件;
+5. 增加了系统API的功能, 使用了中断的方法调用系统API, 绑定了中断号0x40. 
+    通过统一的调用系统API函数, 向EDX寄存器传输不同的参数, 来调用不同的API;
+6. 写了显示单个字符的API和两种不同的显示字符串的方法的API;
+7. 优化了console.c的源代码;
+8. Makefile增加了对hello.nas和hello2.nas的编译生成, 然后copy到系统映像文件中.
+
+已知未解决问题：
+hello.hrb(循环执行显示单个字符)可以运行, hello2.hrb(直接显示字符串)运行之后没有输出

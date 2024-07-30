@@ -1,0 +1,1270 @@
+     1 00000000                                 [FORMAT "WCOFF"]
+     2 00000000                                 [INSTRSET "i486p"]
+     3 00000000                                 [OPTIMIZE 1]
+     4 00000000                                 [OPTION 1]
+     5 00000000                                 [BITS 32]
+     6 00000000                                 	EXTERN	_init_gdtidt
+     7 00000000                                 	EXTERN	_init_pic
+     8 00000000                                 	EXTERN	_io_sti
+     9 00000000                                 	EXTERN	_fifo32_init
+    10 00000000                                 	EXTERN	_init_pit
+    11 00000000                                 	EXTERN	_init_keyboard
+    12 00000000                                 	EXTERN	_enable_mouse
+    13 00000000                                 	EXTERN	_io_out8
+    14 00000000                                 	EXTERN	_memtest
+    15 00000000                                 	EXTERN	_memman_init
+    16 00000000                                 	EXTERN	_memman_free
+    17 00000000                                 	EXTERN	_init_palette
+    18 00000000                                 	EXTERN	_shtctl_init
+    19 00000000                                 	EXTERN	_task_init
+    20 00000000                                 	EXTERN	_task_run
+    21 00000000                                 	EXTERN	_sheet_alloc
+    22 00000000                                 	EXTERN	_memman_alloc_4k
+    23 00000000                                 	EXTERN	_sheet_setbuf
+    24 00000000                                 	EXTERN	_init_screen8
+    25 00000000                                 	EXTERN	_init_mouse_cursor8
+    26 00000000                                 	EXTERN	_sheet_slide
+    27 00000000                                 	EXTERN	_sheet_updown
+    28 00000000                                 	EXTERN	_fifo32_put
+    29 00000000                                 	EXTERN	_file_readfat
+    30 00000000                                 	EXTERN	_file_search
+    31 00000000                                 	EXTERN	_file_loadfile
+    32 00000000                                 	EXTERN	_memman_free_4k
+    33 00000000                                 	EXTERN	_fifo32_status
+    34 00000000                                 	EXTERN	_io_cli
+    35 00000000                                 	EXTERN	_fifo32_get
+    36 00000000                                 	EXTERN	_sheet_free
+    37 00000000                                 	EXTERN	_taskctl
+    38 00000000                                 	EXTERN	_mouse_decode
+    39 00000000                                 	EXTERN	_cons_putstr0
+    40 00000000                                 	EXTERN	_asm_end_app
+    41 00000000                                 	EXTERN	_keytable0
+    42 00000000                                 	EXTERN	_wait_KBC_sendready
+    43 00000000                                 	EXTERN	_keytable1
+    44 00000000                                 	EXTERN	_task_sleep
+    45 00000000                                 	EXTERN	_hankaku
+    46 00000000                                 	EXTERN	_change_wtitle8
+    47 00000000                                 	EXTERN	_task_alloc
+    48 00000000                                 	EXTERN	_console_task
+    49 00000000                                 	EXTERN	_make_window8
+    50 00000000                                 	EXTERN	_make_textbox8
+    51 00000000                                 [FILE "bootpack.c"]
+    52                                          [SECTION .data]
+    53 00000000                                 _keytable0:
+    54 00000000 00                              	DB	0
+    55 00000001 00                              	DB	0
+    56 00000002 31                              	DB	49
+    57 00000003 32                              	DB	50
+    58 00000004 33                              	DB	51
+    59 00000005 34                              	DB	52
+    60 00000006 35                              	DB	53
+    61 00000007 36                              	DB	54
+    62 00000008 37                              	DB	55
+    63 00000009 38                              	DB	56
+    64 0000000A 39                              	DB	57
+    65 0000000B 30                              	DB	48
+    66 0000000C 2D                              	DB	45
+    67 0000000D 3D                              	DB	61
+    68 0000000E 08                              	DB	8
+    69 0000000F 00                              	DB	0
+    70 00000010 51                              	DB	81
+    71 00000011 57                              	DB	87
+    72 00000012 45                              	DB	69
+    73 00000013 52                              	DB	82
+    74 00000014 54                              	DB	84
+    75 00000015 59                              	DB	89
+    76 00000016 55                              	DB	85
+    77 00000017 49                              	DB	73
+    78 00000018 4F                              	DB	79
+    79 00000019 50                              	DB	80
+    80 0000001A 5B                              	DB	91
+    81 0000001B 5D                              	DB	93
+    82 0000001C 0A                              	DB	10
+    83 0000001D 00                              	DB	0
+    84 0000001E 41                              	DB	65
+    85 0000001F 53                              	DB	83
+    86 00000020 44                              	DB	68
+    87 00000021 46                              	DB	70
+    88 00000022 47                              	DB	71
+    89 00000023 48                              	DB	72
+    90 00000024 4A                              	DB	74
+    91 00000025 4B                              	DB	75
+    92 00000026 4C                              	DB	76
+    93 00000027 3B                              	DB	59
+    94 00000028 27                              	DB	39
+    95 00000029 60                              	DB	96
+    96 0000002A 00                              	DB	0
+    97 0000002B 5C                              	DB	92
+    98 0000002C 5A                              	DB	90
+    99 0000002D 58                              	DB	88
+   100 0000002E 43                              	DB	67
+   101 0000002F 56                              	DB	86
+   102 00000030 42                              	DB	66
+   103 00000031 4E                              	DB	78
+   104 00000032 4D                              	DB	77
+   105 00000033 2C                              	DB	44
+   106 00000034 2E                              	DB	46
+   107 00000035 2F                              	DB	47
+   108 00000036 00                              	DB	0
+   109 00000037 2A                              	DB	42
+   110 00000038 00                              	DB	0
+   111 00000039 20                              	DB	32
+   112 0000003A 00                              	DB	0
+   113 0000003B 00                              	DB	0
+   114 0000003C 00                              	DB	0
+   115 0000003D 00                              	DB	0
+   116 0000003E 00                              	DB	0
+   117 0000003F 00                              	DB	0
+   118 00000040 00                              	DB	0
+   119 00000041 00                              	DB	0
+   120 00000042 00                              	DB	0
+   121 00000043 00                              	DB	0
+   122 00000044 00                              	DB	0
+   123 00000045 00                              	DB	0
+   124 00000046 00                              	DB	0
+   125 00000047 37                              	DB	55
+   126 00000048 38                              	DB	56
+   127 00000049 39                              	DB	57
+   128 0000004A 2D                              	DB	45
+   129 0000004B 34                              	DB	52
+   130 0000004C 35                              	DB	53
+   131 0000004D 36                              	DB	54
+   132 0000004E 2B                              	DB	43
+   133 0000004F 31                              	DB	49
+   134 00000050 32                              	DB	50
+   135 00000051 33                              	DB	51
+   136 00000052 30                              	DB	48
+   137 00000053 2E                              	DB	46
+   138 00000054 00                              	DB	0
+   139 00000055 00                              	DB	0
+   140 00000056 00                              	DB	0
+   141 00000057 00                              	DB	0
+   142 00000058 00                              	DB	0
+   143 00000059 00                              	DB	0
+   144 0000005A 00                              	DB	0
+   145 0000005B 00                              	DB	0
+   146 0000005C 00                              	DB	0
+   147 0000005D 00                              	DB	0
+   148 0000005E 00                              	DB	0
+   149 0000005F 00                              	DB	0
+   150 00000060 00                              	DB	0
+   151 00000061 00                              	DB	0
+   152 00000062 00                              	DB	0
+   153 00000063 00                              	DB	0
+   154 00000064 00                              	DB	0
+   155 00000065 00                              	DB	0
+   156 00000066 00                              	DB	0
+   157 00000067 00                              	DB	0
+   158 00000068 00                              	DB	0
+   159 00000069 00                              	DB	0
+   160 0000006A 00                              	DB	0
+   161 0000006B 00                              	DB	0
+   162 0000006C 00                              	DB	0
+   163 0000006D 00                              	DB	0
+   164 0000006E 00                              	DB	0
+   165 0000006F 00                              	DB	0
+   166 00000070 00                              	DB	0
+   167 00000071 00                              	DB	0
+   168 00000072 00                              	DB	0
+   169 00000073 5C                              	DB	92
+   170 00000074 00                              	DB	0
+   171 00000075 00                              	DB	0
+   172 00000076 00                              	DB	0
+   173 00000077 00                              	DB	0
+   174 00000078 00                              	DB	0
+   175 00000079 00                              	DB	0
+   176 0000007A 00                              	DB	0
+   177 0000007B 00                              	DB	0
+   178 0000007C 00                              	DB	0
+   179 0000007D 5C                              	DB	92
+   180 0000007E 00                              	DB	0
+   181 0000007F 00                              	DB	0
+   182 00000080                                 _keytable1:
+   183 00000080 00                              	DB	0
+   184 00000081 00                              	DB	0
+   185 00000082 21                              	DB	33
+   186 00000083 40                              	DB	64
+   187 00000084 23                              	DB	35
+   188 00000085 24                              	DB	36
+   189 00000086 25                              	DB	37
+   190 00000087 5E                              	DB	94
+   191 00000088 26                              	DB	38
+   192 00000089 2A                              	DB	42
+   193 0000008A 28                              	DB	40
+   194 0000008B 29                              	DB	41
+   195 0000008C 5F                              	DB	95
+   196 0000008D 2B                              	DB	43
+   197 0000008E 08                              	DB	8
+   198 0000008F 00                              	DB	0
+   199 00000090 51                              	DB	81
+   200 00000091 57                              	DB	87
+   201 00000092 45                              	DB	69
+   202 00000093 52                              	DB	82
+   203 00000094 54                              	DB	84
+   204 00000095 59                              	DB	89
+   205 00000096 55                              	DB	85
+   206 00000097 49                              	DB	73
+   207 00000098 4F                              	DB	79
+   208 00000099 50                              	DB	80
+   209 0000009A 7B                              	DB	123
+   210 0000009B 7D                              	DB	125
+   211 0000009C 0A                              	DB	10
+   212 0000009D 00                              	DB	0
+   213 0000009E 41                              	DB	65
+   214 0000009F 53                              	DB	83
+   215 000000A0 44                              	DB	68
+   216 000000A1 46                              	DB	70
+   217 000000A2 47                              	DB	71
+   218 000000A3 48                              	DB	72
+   219 000000A4 4A                              	DB	74
+   220 000000A5 4B                              	DB	75
+   221 000000A6 4C                              	DB	76
+   222 000000A7 3A                              	DB	58
+   223 000000A8 22                              	DB	34
+   224 000000A9 7E                              	DB	126
+   225 000000AA 00                              	DB	0
+   226 000000AB 7C                              	DB	124
+   227 000000AC 5A                              	DB	90
+   228 000000AD 58                              	DB	88
+   229 000000AE 43                              	DB	67
+   230 000000AF 56                              	DB	86
+   231 000000B0 42                              	DB	66
+   232 000000B1 4E                              	DB	78
+   233 000000B2 4D                              	DB	77
+   234 000000B3 3C                              	DB	60
+   235 000000B4 3E                              	DB	62
+   236 000000B5 3F                              	DB	63
+   237 000000B6 00                              	DB	0
+   238 000000B7 2A                              	DB	42
+   239 000000B8 00                              	DB	0
+   240 000000B9 20                              	DB	32
+   241 000000BA 00                              	DB	0
+   242 000000BB 00                              	DB	0
+   243 000000BC 00                              	DB	0
+   244 000000BD 00                              	DB	0
+   245 000000BE 00                              	DB	0
+   246 000000BF 00                              	DB	0
+   247 000000C0 00                              	DB	0
+   248 000000C1 00                              	DB	0
+   249 000000C2 00                              	DB	0
+   250 000000C3 00                              	DB	0
+   251 000000C4 00                              	DB	0
+   252 000000C5 00                              	DB	0
+   253 000000C6 00                              	DB	0
+   254 000000C7 37                              	DB	55
+   255 000000C8 38                              	DB	56
+   256 000000C9 39                              	DB	57
+   257 000000CA 2D                              	DB	45
+   258 000000CB 34                              	DB	52
+   259 000000CC 35                              	DB	53
+   260 000000CD 36                              	DB	54
+   261 000000CE 2B                              	DB	43
+   262 000000CF 31                              	DB	49
+   263 000000D0 32                              	DB	50
+   264 000000D1 33                              	DB	51
+   265 000000D2 30                              	DB	48
+   266 000000D3 2E                              	DB	46
+   267 000000D4 00                              	DB	0
+   268 000000D5 00                              	DB	0
+   269 000000D6 00                              	DB	0
+   270 000000D7 00                              	DB	0
+   271 000000D8 00                              	DB	0
+   272 000000D9 00                              	DB	0
+   273 000000DA 00                              	DB	0
+   274 000000DB 00                              	DB	0
+   275 000000DC 00                              	DB	0
+   276 000000DD 00                              	DB	0
+   277 000000DE 00                              	DB	0
+   278 000000DF 00                              	DB	0
+   279 000000E0 00                              	DB	0
+   280 000000E1 00                              	DB	0
+   281 000000E2 00                              	DB	0
+   282 000000E3 00                              	DB	0
+   283 000000E4 00                              	DB	0
+   284 000000E5 00                              	DB	0
+   285 000000E6 00                              	DB	0
+   286 000000E7 00                              	DB	0
+   287 000000E8 00                              	DB	0
+   288 000000E9 00                              	DB	0
+   289 000000EA 00                              	DB	0
+   290 000000EB 00                              	DB	0
+   291 000000EC 00                              	DB	0
+   292 000000ED 00                              	DB	0
+   293 000000EE 00                              	DB	0
+   294 000000EF 00                              	DB	0
+   295 000000F0 00                              	DB	0
+   296 000000F1 00                              	DB	0
+   297 000000F2 00                              	DB	0
+   298 000000F3 5F                              	DB	95
+   299 000000F4 00                              	DB	0
+   300 000000F5 00                              	DB	0
+   301 000000F6 00                              	DB	0
+   302 000000F7 00                              	DB	0
+   303 000000F8 00                              	DB	0
+   304 000000F9 00                              	DB	0
+   305 000000FA 00                              	DB	0
+   306 000000FB 00                              	DB	0
+   307 000000FC 00                              	DB	0
+   308 000000FD 7C                              	DB	124
+   309 000000FE 00                              	DB	0
+   310 000000FF 00                              	DB	0
+   311 00000100                                 LC0:
+   312 00000100 63 68 69 6E 65 73 65 2E 66 6E   	DB	"chinese.fnt",0x00
+       0000010A 74 00 
+   313 0000010C                                 LC2:
+   314 0000010C 0A 42 72 65 61 6B 28 6D 6F 75   	DB	0x0A,"Break(mouse) :",0x0A,0x00
+       00000116 73 65 29 20 3A 0A 00 
+   315 0000011D                                 LC1:
+   316 0000011D 0A 42 72 65 61 6B 28 6B 65 79   	DB	0x0A,"Break(key) :",0x0A,0x00
+       00000127 29 20 3A 0A 00 
+   317                                          [SECTION .text]
+   318 00000000                                 	GLOBAL	_HariMain
+   319 00000000                                 _HariMain:
+   320 00000000 55                              	PUSH	EBP
+   321 00000001 89 E5                           	MOV	EBP,ESP
+   322 00000003 57                              	PUSH	EDI
+   323 00000004 56                              	PUSH	ESI
+   324 00000005 53                              	PUSH	EBX
+   325 00000006 8D 5D A4                        	LEA	EBX,DWORD [-92+EBP]
+   326 00000009 81 EC 00000454                  	SUB	ESP,1108
+   327 0000000F C7 85 FFFFFBE4 FFFFFFFF         	MOV	DWORD [-1052+EBP],-1
+   328 00000019 C7 85 FFFFFBE0 00000000         	MOV	DWORD [-1056+EBP],0
+   329 00000023 C7 85 FFFFFBDC 7FFFFFFF         	MOV	DWORD [-1060+EBP],2147483647
+   330 0000002D C7 85 FFFFFBD8 00000000         	MOV	DWORD [-1064+EBP],0
+   331 00000037 C7 85 FFFFFBC8 00000000         	MOV	DWORD [-1080+EBP],0
+   332 00000041 A0 00000FF1                     	MOV	AL,BYTE [4081]
+   333 00000046 C0 F8 04                        	SAR	AL,4
+   334 00000049 89 C2                           	MOV	EDX,EAX
+   335 0000004B 83 E2 07                        	AND	EDX,7
+   336 0000004E 89 95 FFFFFBC4                  	MOV	DWORD [-1084+EBP],EDX
+   337 00000054 C7 85 FFFFFBC0 FFFFFFFF         	MOV	DWORD [-1088+EBP],-1
+   338 0000005E C7 85 FFFFFBBC FFFFFFFF         	MOV	DWORD [-1092+EBP],-1
+   339 00000068 C7 85 FFFFFBB8 FFFFFFFF         	MOV	DWORD [-1096+EBP],-1
+   340 00000072 C7 85 FFFFFBB4 00000000         	MOV	DWORD [-1100+EBP],0
+   341 0000007C C7 85 FFFFFBB0 00000000         	MOV	DWORD [-1104+EBP],0
+   342 00000086 E8 [00000000]                   	CALL	_init_gdtidt
+   343 0000008B E8 [00000000]                   	CALL	_init_pic
+   344 00000090 E8 [00000000]                   	CALL	_io_sti
+   345 00000095 8D 85 FFFFFD84                  	LEA	EAX,DWORD [-636+EBP]
+   346 0000009B 6A 00                           	PUSH	0
+   347 0000009D 50                              	PUSH	EAX
+   348 0000009E 68 00000080                     	PUSH	128
+   349 000000A3 53                              	PUSH	EBX
+   350 000000A4 E8 [00000000]                   	CALL	_fifo32_init
+   351 000000A9 89 1D 00000FEC                  	MOV	DWORD [4076],EBX
+   352 000000AF E8 [00000000]                   	CALL	_init_pit
+   353 000000B4 68 00000100                     	PUSH	256
+   354 000000B9 53                              	PUSH	EBX
+   355 000000BA E8 [00000000]                   	CALL	_init_keyboard
+   356 000000BF 8D 85 FFFFFCF4                  	LEA	EAX,DWORD [-780+EBP]
+   357 000000C5 50                              	PUSH	EAX
+   358 000000C6 68 00000200                     	PUSH	512
+   359 000000CB 53                              	PUSH	EBX
+   360 000000CC E8 [00000000]                   	CALL	_enable_mouse
+   361 000000D1 83 C4 24                        	ADD	ESP,36
+   362 000000D4 68 000000F8                     	PUSH	248
+   363 000000D9 6A 21                           	PUSH	33
+   364 000000DB E8 [00000000]                   	CALL	_io_out8
+   365 000000E0 68 000000EF                     	PUSH	239
+   366 000000E5 68 000000A1                     	PUSH	161
+   367 000000EA E8 [00000000]                   	CALL	_io_out8
+   368 000000EF 8D 85 FFFFFD04                  	LEA	EAX,DWORD [-764+EBP]
+   369 000000F5 6A 00                           	PUSH	0
+   370 000000F7 50                              	PUSH	EAX
+   371 000000F8 8D 45 84                        	LEA	EAX,DWORD [-124+EBP]
+   372 000000FB 6A 20                           	PUSH	32
+   373 000000FD 50                              	PUSH	EAX
+   374 000000FE E8 [00000000]                   	CALL	_fifo32_init
+   375 00000103 83 C4 20                        	ADD	ESP,32
+   376 00000106 68 BFFFFFFF                     	PUSH	-1073741825
+   377 0000010B 68 00400000                     	PUSH	4194304
+   378 00000110 E8 [00000000]                   	CALL	_memtest
+   379 00000115 68 003C0000                     	PUSH	3932160
+   380 0000011A 89 85 FFFFFBD4                  	MOV	DWORD [-1068+EBP],EAX
+   381 00000120 E8 [00000000]                   	CALL	_memman_init
+   382 00000125 68 0009E000                     	PUSH	647168
+   383 0000012A 68 00001000                     	PUSH	4096
+   384 0000012F 68 003C0000                     	PUSH	3932160
+   385 00000134 E8 [00000000]                   	CALL	_memman_free
+   386 00000139 8B 85 FFFFFBD4                  	MOV	EAX,DWORD [-1068+EBP]
+   387 0000013F 2D 00400000                     	SUB	EAX,4194304
+   388 00000144 50                              	PUSH	EAX
+   389 00000145 68 00400000                     	PUSH	4194304
+   390 0000014A 68 003C0000                     	PUSH	3932160
+   391 0000014F E8 [00000000]                   	CALL	_memman_free
+   392 00000154 83 C4 24                        	ADD	ESP,36
+   393 00000157 E8 [00000000]                   	CALL	_init_palette
+   394 0000015C 0F BF 05 00000FF6               	MOVSX	EAX,WORD [4086]
+   395 00000163 50                              	PUSH	EAX
+   396 00000164 0F BF 05 00000FF4               	MOVSX	EAX,WORD [4084]
+   397 0000016B 50                              	PUSH	EAX
+   398 0000016C FF 35 00000FF8                  	PUSH	DWORD [4088]
+   399 00000172 68 003C0000                     	PUSH	3932160
+   400 00000177 E8 [00000000]                   	CALL	_shtctl_init
+   401 0000017C 68 003C0000                     	PUSH	3932160
+   402 00000181 89 85 FFFFFBF0                  	MOV	DWORD [-1040+EBP],EAX
+   403 00000187 E8 [00000000]                   	CALL	_task_init
+   404 0000018C 6A 02                           	PUSH	2
+   405 0000018E 6A 01                           	PUSH	1
+   406 00000190 89 85 FFFFFBCC                  	MOV	DWORD [-1076+EBP],EAX
+   407 00000196 50                              	PUSH	EAX
+   408 00000197 89 45 BC                        	MOV	DWORD [-68+EBP],EAX
+   409 0000019A E8 [00000000]                   	CALL	_task_run
+   410 0000019F 83 C4 20                        	ADD	ESP,32
+   411 000001A2 8B 85 FFFFFBCC                  	MOV	EAX,DWORD [-1076+EBP]
+   412 000001A8 8B 95 FFFFFBF0                  	MOV	EDX,DWORD [-1040+EBP]
+   413 000001AE 89 15 00000FE4                  	MOV	DWORD [4068],EDX
+   414 000001B4 C6 80 000000BC 00               	MOV	BYTE [188+EAX],0
+   415 000001BB 52                              	PUSH	EDX
+   416 000001BC E8 [00000000]                   	CALL	_sheet_alloc
+   417 000001C1 89 C6                           	MOV	ESI,EAX
+   418 000001C3 0F BF 15 00000FF6               	MOVSX	EDX,WORD [4086]
+   419 000001CA 0F BF 05 00000FF4               	MOVSX	EAX,WORD [4084]
+   420 000001D1 0F AF C2                        	IMUL	EAX,EDX
+   421 000001D4 50                              	PUSH	EAX
+   422 000001D5 68 003C0000                     	PUSH	3932160
+   423 000001DA E8 [00000000]                   	CALL	_memman_alloc_4k
+   424 000001DF 6A FF                           	PUSH	-1
+   425 000001E1 89 C3                           	MOV	EBX,EAX
+   426 000001E3 0F BF 05 00000FF6               	MOVSX	EAX,WORD [4086]
+   427 000001EA 50                              	PUSH	EAX
+   428 000001EB 0F BF 05 00000FF4               	MOVSX	EAX,WORD [4084]
+   429 000001F2 50                              	PUSH	EAX
+   430 000001F3 53                              	PUSH	EBX
+   431 000001F4 56                              	PUSH	ESI
+   432 000001F5 E8 [00000000]                   	CALL	_sheet_setbuf
+   433 000001FA 83 C4 20                        	ADD	ESP,32
+   434 000001FD 0F BF 05 00000FF6               	MOVSX	EAX,WORD [4086]
+   435 00000204 50                              	PUSH	EAX
+   436 00000205 0F BF 05 00000FF4               	MOVSX	EAX,WORD [4084]
+   437 0000020C 50                              	PUSH	EAX
+   438 0000020D 53                              	PUSH	EBX
+   439 0000020E 8D 9D FFFFFBF4                  	LEA	EBX,DWORD [-1036+EBP]
+   440 00000214 E8 [00000000]                   	CALL	_init_screen8
+   441 00000219 FF B5 FFFFFBD4                  	PUSH	DWORD [-1068+EBP]
+   442 0000021F FF B5 FFFFFBF0                  	PUSH	DWORD [-1040+EBP]
+   443 00000225 E8 00000A34                     	CALL	_open_console
+   444 0000022A FF B5 FFFFFBF0                  	PUSH	DWORD [-1040+EBP]
+   445 00000230 89 C7                           	MOV	EDI,EAX
+   446 00000232 E8 [00000000]                   	CALL	_sheet_alloc
+   447 00000237 6A 63                           	PUSH	99
+   448 00000239 6A 10                           	PUSH	16
+   449 0000023B 89 85 FFFFFBD0                  	MOV	DWORD [-1072+EBP],EAX
+   450 00000241 6A 10                           	PUSH	16
+   451 00000243 53                              	PUSH	EBX
+   452 00000244 50                              	PUSH	EAX
+   453 00000245 E8 [00000000]                   	CALL	_sheet_setbuf
+   454 0000024A 83 C4 2C                        	ADD	ESP,44
+   455 0000024D 6A 63                           	PUSH	99
+   456 0000024F 53                              	PUSH	EBX
+   457 00000250 BB 00000002                     	MOV	EBX,2
+   458 00000255 E8 [00000000]                   	CALL	_init_mouse_cursor8
+   459 0000025A 0F BF 05 00000FF4               	MOVSX	EAX,WORD [4084]
+   460 00000261 8D 48 F0                        	LEA	ECX,DWORD [-16+EAX]
+   461 00000264 89 C8                           	MOV	EAX,ECX
+   462 00000266 99                              	CDQ
+   463 00000267 F7 FB                           	IDIV	EBX
+   464 00000269 89 85 FFFFFBEC                  	MOV	DWORD [-1044+EBP],EAX
+   465 0000026F 0F BF 05 00000FF6               	MOVSX	EAX,WORD [4086]
+   466 00000276 6A 00                           	PUSH	0
+   467 00000278 8D 48 D4                        	LEA	ECX,DWORD [-44+EAX]
+   468 0000027B 6A 00                           	PUSH	0
+   469 0000027D 89 C8                           	MOV	EAX,ECX
+   470 0000027F 56                              	PUSH	ESI
+   471 00000280 99                              	CDQ
+   472 00000281 F7 FB                           	IDIV	EBX
+   473 00000283 89 85 FFFFFBE8                  	MOV	DWORD [-1048+EBP],EAX
+   474 00000289 E8 [00000000]                   	CALL	_sheet_slide
+   475 0000028E 6A 04                           	PUSH	4
+   476 00000290 6A 20                           	PUSH	32
+   477 00000292 57                              	PUSH	EDI
+   478 00000293 E8 [00000000]                   	CALL	_sheet_slide
+   479 00000298 83 C4 20                        	ADD	ESP,32
+   480 0000029B FF B5 FFFFFBE8                  	PUSH	DWORD [-1048+EBP]
+   481 000002A1 FF B5 FFFFFBEC                  	PUSH	DWORD [-1044+EBP]
+   482 000002A7 FF B5 FFFFFBD0                  	PUSH	DWORD [-1072+EBP]
+   483 000002AD E8 [00000000]                   	CALL	_sheet_slide
+   484 000002B2 6A 00                           	PUSH	0
+   485 000002B4 56                              	PUSH	ESI
+   486 000002B5 E8 [00000000]                   	CALL	_sheet_updown
+   487 000002BA 6A 01                           	PUSH	1
+   488 000002BC 57                              	PUSH	EDI
+   489 000002BD E8 [00000000]                   	CALL	_sheet_updown
+   490 000002C2 6A 02                           	PUSH	2
+   491 000002C4 FF B5 FFFFFBD0                  	PUSH	DWORD [-1072+EBP]
+   492 000002CA E8 [00000000]                   	CALL	_sheet_updown
+   493 000002CF 83 C4 24                        	ADD	ESP,36
+   494 000002D2 57                              	PUSH	EDI
+   495 000002D3 E8 000008B2                     	CALL	_keywin_on
+   496 000002D8 8D 55 84                        	LEA	EDX,DWORD [-124+EBP]
+   497 000002DB 68 000000ED                     	PUSH	237
+   498 000002E0 52                              	PUSH	EDX
+   499 000002E1 E8 [00000000]                   	CALL	_fifo32_put
+   500 000002E6 8D 45 84                        	LEA	EAX,DWORD [-124+EBP]
+   501 000002E9 FF B5 FFFFFBC4                  	PUSH	DWORD [-1084+EBP]
+   502 000002EF 50                              	PUSH	EAX
+   503 000002F0 E8 [00000000]                   	CALL	_fifo32_put
+   504 000002F5 68 00029640                     	PUSH	169536
+   505 000002FA 68 003C0000                     	PUSH	3932160
+   506 000002FF E8 [00000000]                   	CALL	_memman_alloc_4k
+   507 00000304 68 00002D00                     	PUSH	11520
+   508 00000309 68 003C0000                     	PUSH	3932160
+   509 0000030E 89 C3                           	MOV	EBX,EAX
+   510 00000310 E8 [00000000]                   	CALL	_memman_alloc_4k
+   511 00000315 83 C4 24                        	ADD	ESP,36
+   512 00000318 68 00100200                     	PUSH	1049088
+   513 0000031D 89 85 FFFFFBAC                  	MOV	DWORD [-1108+EBP],EAX
+   514 00000323 50                              	PUSH	EAX
+   515 00000324 E8 [00000000]                   	CALL	_file_readfat
+   516 00000329 68 000000E0                     	PUSH	224
+   517 0000032E 68 00102600                     	PUSH	1058304
+   518 00000333 68 [00000100]                   	PUSH	LC0
+   519 00000338 E8 [00000000]                   	CALL	_file_search
+   520 0000033D 83 C4 14                        	ADD	ESP,20
+   521 00000340 85 C0                           	TEST	EAX,EAX
+   522 00000342 0F 84 000007E9                  	JE	L2
+   523 00000348 68 00103E00                     	PUSH	1064448
+   524 0000034D FF B5 FFFFFBAC                  	PUSH	DWORD [-1108+EBP]
+   525 00000353 53                              	PUSH	EBX
+   526 00000354 FF 70 1C                        	PUSH	DWORD [28+EAX]
+   527 00000357 0F B7 40 1A                     	MOVZX	EAX,WORD [26+EAX]
+   528 0000035B 50                              	PUSH	EAX
+   529 0000035C E8 [00000000]                   	CALL	_file_loadfile
+   530 00000361 83 C4 14                        	ADD	ESP,20
+   531 00000364                                 L3:
+   532 00000364 89 1D 00000FE8                  	MOV	DWORD [4072],EBX
+   533 0000036A 68 00002D00                     	PUSH	11520
+   534 0000036F FF B5 FFFFFBAC                  	PUSH	DWORD [-1108+EBP]
+   535 00000375 68 003C0000                     	PUSH	3932160
+   536 0000037A E8 [00000000]                   	CALL	_memman_free_4k
+   537 0000037F                                 L90:
+   538 0000037F 83 C4 0C                        	ADD	ESP,12
+   539 00000382                                 L14:
+   540 00000382 8D 5D 84                        	LEA	EBX,DWORD [-124+EBP]
+   541 00000385 53                              	PUSH	EBX
+   542 00000386 E8 [00000000]                   	CALL	_fifo32_status
+   543 0000038B 5A                              	POP	EDX
+   544 0000038C 85 C0                           	TEST	EAX,EAX
+   545 0000038E 7E 0D                           	JLE	L17
+   546 00000390 83 BD FFFFFBC0 00               	CMP	DWORD [-1088+EBP],0
+   547 00000397 0F 88 0000076E                  	JS	L94
+   548 0000039D                                 L17:
+   549 0000039D 8D 5D A4                        	LEA	EBX,DWORD [-92+EBP]
+   550 000003A0 E8 [00000000]                   	CALL	_io_cli
+   551 000003A5 53                              	PUSH	EBX
+   552 000003A6 E8 [00000000]                   	CALL	_fifo32_status
+   553 000003AB 5E                              	POP	ESI
+   554 000003AC 85 C0                           	TEST	EAX,EAX
+   555 000003AE 0F 84 000006F8                  	JE	L95
+   556 000003B4 53                              	PUSH	EBX
+   557 000003B5 E8 [00000000]                   	CALL	_fifo32_get
+   558 000003BA 89 C6                           	MOV	ESI,EAX
+   559 000003BC E8 [00000000]                   	CALL	_io_sti
+   560 000003C1 5B                              	POP	EBX
+   561 000003C2 85 FF                           	TEST	EDI,EDI
+   562 000003C4 74 27                           	JE	L24
+   563 000003C6 83 7F 1C 00                     	CMP	DWORD [28+EDI],0
+   564 000003CA 75 21                           	JNE	L24
+   565 000003CC 8B 95 FFFFFBF0                  	MOV	EDX,DWORD [-1040+EBP]
+   566 000003D2 31 FF                           	XOR	EDI,EDI
+   567 000003D4 8B 42 10                        	MOV	EAX,DWORD [16+EDX]
+   568 000003D7 83 F8 01                        	CMP	EAX,1
+   569 000003DA 74 11                           	JE	L24
+   570 000003DC 8B 95 FFFFFBF0                  	MOV	EDX,DWORD [-1040+EBP]
+   571 000003E2 8B 7C 82 10                     	MOV	EDI,DWORD [16+EDX+EAX*4]
+   572 000003E6 57                              	PUSH	EDI
+   573 000003E7 E8 0000079E                     	CALL	_keywin_on
+   574 000003EC 59                              	POP	ECX
+   575 000003ED                                 L24:
+   576 000003ED 8D 86 FFFFFF00                  	LEA	EAX,DWORD [-256+ESI]
+   577 000003F3 3D 000000FF                     	CMP	EAX,255
+   578 000003F8 0F 86 000003B3                  	JBE	L96
+   579 000003FE 8D 86 FFFFFE00                  	LEA	EAX,DWORD [-512+ESI]
+   580 00000404 3D 000000FF                     	CMP	EAX,255
+   581 00000409 0F 86 00000093                  	JBE	L97
+   582 0000040F 8D 86 FFFFFD00                  	LEA	EAX,DWORD [-768+ESI]
+   583 00000415 3D 000000FF                     	CMP	EAX,255
+   584 0000041A 76 6E                           	JBE	L98
+   585 0000041C 8D 86 FFFFFC00                  	LEA	EAX,DWORD [-1024+ESI]
+   586 00000422 3D 000003E7                     	CMP	EAX,999
+   587 00000427 76 43                           	JBE	L99
+   588 00000429 8D 86 FFFFF818                  	LEA	EAX,DWORD [-2024+ESI]
+   589 0000042F 3D 000000FF                     	CMP	EAX,255
+   590 00000434 0F 87 FFFFFF48                  	JA	L14
+   591 0000043A 6B C6 28                        	IMUL	EAX,ESI,40
+   592 0000043D 03 85 FFFFFBF0                  	ADD	EAX,DWORD [-1040+EBP]
+   593 00000443 68 0000A500                     	PUSH	42240
+   594 00000448 FF B0 FFFEC7D4                  	PUSH	DWORD [-79916+EAX]
+   595 0000044E 68 003C0000                     	PUSH	3932160
+   596 00000453 8D 98 FFFEC7D4                  	LEA	EBX,DWORD [-79916+EAX]
+   597 00000459 E8 [00000000]                   	CALL	_memman_free_4k
+   598 0000045E 53                              	PUSH	EBX
+   599 0000045F E8 [00000000]                   	CALL	_sheet_free
+   600 00000464 83 C4 10                        	ADD	ESP,16
+   601 00000467 E9 FFFFFF16                     	JMP	L14
+   602 0000046C                                 L99:
+   603 0000046C 69 F6 000000C0                  	IMUL	ESI,ESI,192
+   604 00000472 03 35 [00000000]                	ADD	ESI,DWORD [_taskctl]
+   605 00000478 8D 86 FFFD0FF8                  	LEA	EAX,DWORD [-192520+ESI]
+   606 0000047E 50                              	PUSH	EAX
+   607 0000047F E8 00000859                     	CALL	_close_constask
+   608 00000484                                 L89:
+   609 00000484 58                              	POP	EAX
+   610 00000485 E9 FFFFFEF8                     	JMP	L14
+   611 0000048A                                 L98:
+   612 0000048A 6B C6 28                        	IMUL	EAX,ESI,40
+   613 0000048D 8B 95 FFFFFBF0                  	MOV	EDX,DWORD [-1040+EBP]
+   614 00000493 8D 84 10 FFFF8C14               	LEA	EAX,DWORD [-29676+EAX+EDX*1]
+   615 0000049A 50                              	PUSH	EAX
+   616 0000049B E8 0000087D                     	CALL	_close_console
+   617 000004A0 EB E2                           	JMP	L89
+   618 000004A2                                 L97:
+   619 000004A2 89 F2                           	MOV	EDX,ESI
+   620 000004A4 0F B6 C2                        	MOVZX	EAX,DL
+   621 000004A7 50                              	PUSH	EAX
+   622 000004A8 8D 85 FFFFFCF4                  	LEA	EAX,DWORD [-780+EBP]
+   623 000004AE 50                              	PUSH	EAX
+   624 000004AF E8 [00000000]                   	CALL	_mouse_decode
+   625 000004B4 59                              	POP	ECX
+   626 000004B5 5B                              	POP	EBX
+   627 000004B6 85 C0                           	TEST	EAX,EAX
+   628 000004B8 0F 84 FFFFFEC4                  	JE	L14
+   629 000004BE 8B 85 FFFFFCFC                  	MOV	EAX,DWORD [-772+EBP]
+   630 000004C4 8B 95 FFFFFCF8                  	MOV	EDX,DWORD [-776+EBP]
+   631 000004CA 01 85 FFFFFBE8                  	ADD	DWORD [-1048+EBP],EAX
+   632 000004D0 01 95 FFFFFBEC                  	ADD	DWORD [-1044+EBP],EDX
+   633 000004D6 0F 88 000002C6                  	JS	L100
+   634 000004DC                                 L56:
+   635 000004DC 83 BD FFFFFBE8 00               	CMP	DWORD [-1048+EBP],0
+   636 000004E3 0F 88 000002AA                  	JS	L101
+   637 000004E9                                 L57:
+   638 000004E9 0F BF 05 00000FF4               	MOVSX	EAX,WORD [4084]
+   639 000004F0 48                              	DEC	EAX
+   640 000004F1 39 85 FFFFFBEC                  	CMP	DWORD [-1044+EBP],EAX
+   641 000004F7 7E 06                           	JLE	L58
+   642 000004F9 89 85 FFFFFBEC                  	MOV	DWORD [-1044+EBP],EAX
+   643 000004FF                                 L58:
+   644 000004FF 0F BF 05 00000FF6               	MOVSX	EAX,WORD [4086]
+   645 00000506 48                              	DEC	EAX
+   646 00000507 39 85 FFFFFBE8                  	CMP	DWORD [-1048+EBP],EAX
+   647 0000050D 7E 06                           	JLE	L59
+   648 0000050F 89 85 FFFFFBE8                  	MOV	DWORD [-1048+EBP],EAX
+   649 00000515                                 L59:
+   650 00000515 FF B5 FFFFFBE8                  	PUSH	DWORD [-1048+EBP]
+   651 0000051B FF B5 FFFFFBEC                  	PUSH	DWORD [-1044+EBP]
+   652 00000521 FF B5 FFFFFBD0                  	PUSH	DWORD [-1072+EBP]
+   653 00000527 E8 [00000000]                   	CALL	_sheet_slide
+   654 0000052C 83 C4 0C                        	ADD	ESP,12
+   655 0000052F 8B 85 FFFFFBEC                  	MOV	EAX,DWORD [-1044+EBP]
+   656 00000535 8B 95 FFFFFBE8                  	MOV	EDX,DWORD [-1048+EBP]
+   657 0000053B 89 85 FFFFFBE4                  	MOV	DWORD [-1052+EBP],EAX
+   658 00000541 89 95 FFFFFBE0                  	MOV	DWORD [-1056+EBP],EDX
+   659 00000547 F7 85 FFFFFD00 00000001         	TEST	DWORD [-768+EBP],1
+   660 00000551 75 40                           	JNE	L102
+   661 00000553 C7 85 FFFFFBBC FFFFFFFF         	MOV	DWORD [-1092+EBP],-1
+   662 0000055D 81 BD FFFFFBDC 7FFFFFFF         	CMP	DWORD [-1060+EBP],2147483647
+   663 00000567 0F 84 FFFFFE15                  	JE	L14
+   664 0000056D                                 L91:
+   665 0000056D FF B5 FFFFFBD8                  	PUSH	DWORD [-1064+EBP]
+   666 00000573 FF B5 FFFFFBDC                  	PUSH	DWORD [-1060+EBP]
+   667 00000579 FF B5 FFFFFBB0                  	PUSH	DWORD [-1104+EBP]
+   668 0000057F E8 [00000000]                   	CALL	_sheet_slide
+   669 00000584 C7 85 FFFFFBDC 7FFFFFFF         	MOV	DWORD [-1060+EBP],2147483647
+   670 0000058E E9 FFFFFDEC                     	JMP	L90
+   671 00000593                                 L102:
+   672 00000593 83 BD FFFFFBBC 00               	CMP	DWORD [-1092+EBP],0
+   673 0000059A 78 46                           	JS	L103
+   674 0000059C 8B 9D FFFFFBEC                  	MOV	EBX,DWORD [-1044+EBP]
+   675 000005A2 8B 85 FFFFFBB4                  	MOV	EAX,DWORD [-1100+EBP]
+   676 000005A8 2B 9D FFFFFBBC                  	SUB	EBX,DWORD [-1092+EBP]
+   677 000005AE 8B B5 FFFFFBE8                  	MOV	ESI,DWORD [-1048+EBP]
+   678 000005B4 2B B5 FFFFFBB8                  	SUB	ESI,DWORD [-1096+EBP]
+   679 000005BA 8B 95 FFFFFBE8                  	MOV	EDX,DWORD [-1048+EBP]
+   680 000005C0 8D 5C 03 02                     	LEA	EBX,DWORD [2+EBX+EAX*1]
+   681 000005C4 89 95 FFFFFBB8                  	MOV	DWORD [-1096+EBP],EDX
+   682 000005CA 89 9D FFFFFBDC                  	MOV	DWORD [-1060+EBP],EBX
+   683 000005D0 01 B5 FFFFFBD8                  	ADD	DWORD [-1064+EBP],ESI
+   684 000005D6 83 A5 FFFFFBDC FC               	AND	DWORD [-1060+EBP],-4
+   685 000005DD E9 FFFFFDA0                     	JMP	L14
+   686 000005E2                                 L103:
+   687 000005E2 8B 85 FFFFFBF0                  	MOV	EAX,DWORD [-1040+EBP]
+   688 000005E8 8B 40 10                        	MOV	EAX,DWORD [16+EAX]
+   689 000005EB 89 85 FFFFFBA4                  	MOV	DWORD [-1116+EBP],EAX
+   690 000005F1 89 C1                           	MOV	ECX,EAX
+   691 000005F3                                 L93:
+   692 000005F3 49                              	DEC	ECX
+   693 000005F4 85 C9                           	TEST	ECX,ECX
+   694 000005F6 0F 8E FFFFFD86                  	JLE	L14
+   695 000005FC 8B 95 FFFFFBF0                  	MOV	EDX,DWORD [-1040+EBP]
+   696 00000602 8B B5 FFFFFBE8                  	MOV	ESI,DWORD [-1048+EBP]
+   697 00000608 8B 9D FFFFFBEC                  	MOV	EBX,DWORD [-1044+EBP]
+   698 0000060E 8B 54 8A 14                     	MOV	EDX,DWORD [20+EDX+ECX*4]
+   699 00000612 89 95 FFFFFBB0                  	MOV	DWORD [-1104+EBP],EDX
+   700 00000618 2B 72 10                        	SUB	ESI,DWORD [16+EDX]
+   701 0000061B 2B 5A 0C                        	SUB	EBX,DWORD [12+EDX]
+   702 0000061E 78 D3                           	JS	L93
+   703 00000620 8B 42 04                        	MOV	EAX,DWORD [4+EDX]
+   704 00000623 39 C3                           	CMP	EBX,EAX
+   705 00000625 7D CC                           	JGE	L93
+   706 00000627 85 F6                           	TEST	ESI,ESI
+   707 00000629 78 C8                           	JS	L93
+   708 0000062B 3B 72 08                        	CMP	ESI,DWORD [8+EDX]
+   709 0000062E 7D C3                           	JGE	L93
+   710 00000630 0F AF C6                        	IMUL	EAX,ESI
+   711 00000633 89 85 FFFFFBA0                  	MOV	DWORD [-1120+EBP],EAX
+   712 00000639 8B 12                           	MOV	EDX,DWORD [EDX]
+   713 0000063B 8B 85 FFFFFBA0                  	MOV	EAX,DWORD [-1120+EBP]
+   714 00000641 01 D8                           	ADD	EAX,EBX
+   715 00000643 0F B6 04 10                     	MOVZX	EAX,BYTE [EAX+EDX*1]
+   716 00000647 8B 95 FFFFFBB0                  	MOV	EDX,DWORD [-1104+EBP]
+   717 0000064D 3B 42 14                        	CMP	EAX,DWORD [20+EDX]
+   718 00000650 74 A1                           	JE	L93
+   719 00000652 8B 85 FFFFFBA4                  	MOV	EAX,DWORD [-1116+EBP]
+   720 00000658 48                              	DEC	EAX
+   721 00000659 50                              	PUSH	EAX
+   722 0000065A 52                              	PUSH	EDX
+   723 0000065B E8 [00000000]                   	CALL	_sheet_updown
+   724 00000660 39 BD FFFFFBB0                  	CMP	DWORD [-1104+EBP],EDI
+   725 00000666 58                              	POP	EAX
+   726 00000667 5A                              	POP	EDX
+   727 00000668 74 14                           	JE	L68
+   728 0000066A 57                              	PUSH	EDI
+   729 0000066B E8 000004EC                     	CALL	_keywin_off
+   730 00000670 8B BD FFFFFBB0                  	MOV	EDI,DWORD [-1104+EBP]
+   731 00000676 57                              	PUSH	EDI
+   732 00000677 E8 0000050E                     	CALL	_keywin_on
+   733 0000067C 5A                              	POP	EDX
+   734 0000067D 59                              	POP	ECX
+   735 0000067E                                 L68:
+   736 0000067E 83 FB 02                        	CMP	EBX,2
+   737 00000681 7E 50                           	JLE	L69
+   738 00000683 8B 95 FFFFFBB0                  	MOV	EDX,DWORD [-1104+EBP]
+   739 00000689 8B 42 04                        	MOV	EAX,DWORD [4+EDX]
+   740 0000068C 83 E8 03                        	SUB	EAX,3
+   741 0000068F 39 C3                           	CMP	EBX,EAX
+   742 00000691 7D 40                           	JGE	L69
+   743 00000693 83 FE 02                        	CMP	ESI,2
+   744 00000696 7E 3B                           	JLE	L69
+   745 00000698 83 FE 14                        	CMP	ESI,20
+   746 0000069B 7F 36                           	JG	L69
+   747 0000069D 8B 85 FFFFFBEC                  	MOV	EAX,DWORD [-1044+EBP]
+   748 000006A3 8B 95 FFFFFBE8                  	MOV	EDX,DWORD [-1048+EBP]
+   749 000006A9 89 85 FFFFFBBC                  	MOV	DWORD [-1092+EBP],EAX
+   750 000006AF 89 95 FFFFFBB8                  	MOV	DWORD [-1096+EBP],EDX
+   751 000006B5 8B 85 FFFFFBB0                  	MOV	EAX,DWORD [-1104+EBP]
+   752 000006BB 8B 95 FFFFFBB0                  	MOV	EDX,DWORD [-1104+EBP]
+   753 000006C1 8B 40 0C                        	MOV	EAX,DWORD [12+EAX]
+   754 000006C4 8B 52 10                        	MOV	EDX,DWORD [16+EDX]
+   755 000006C7 89 85 FFFFFBB4                  	MOV	DWORD [-1100+EBP],EAX
+   756 000006CD 89 95 FFFFFBD8                  	MOV	DWORD [-1064+EBP],EDX
+   757 000006D3                                 L69:
+   758 000006D3 8B 85 FFFFFBB0                  	MOV	EAX,DWORD [-1104+EBP]
+   759 000006D9 8B 50 04                        	MOV	EDX,DWORD [4+EAX]
+   760 000006DC 8D 42 EB                        	LEA	EAX,DWORD [-21+EDX]
+   761 000006DF 39 D8                           	CMP	EAX,EBX
+   762 000006E1 0F 8F FFFFFC9B                  	JG	L14
+   763 000006E7 8D 42 FB                        	LEA	EAX,DWORD [-5+EDX]
+   764 000006EA 39 C3                           	CMP	EBX,EAX
+   765 000006EC 0F 8D FFFFFC90                  	JGE	L14
+   766 000006F2 83 FE 04                        	CMP	ESI,4
+   767 000006F5 0F 8E FFFFFC87                  	JLE	L14
+   768 000006FB 83 FE 12                        	CMP	ESI,18
+   769 000006FE 0F 8F FFFFFC7E                  	JG	L14
+   770 00000704 8B 95 FFFFFBB0                  	MOV	EDX,DWORD [-1104+EBP]
+   771 0000070A F6 42 1C 10                     	TEST	BYTE [28+EDX],16
+   772 0000070E 74 42                           	JE	L104
+   773 00000710 8B 95 FFFFFBB0                  	MOV	EDX,DWORD [-1104+EBP]
+   774 00000716 8B 5A 24                        	MOV	EBX,DWORD [36+EDX]
+   775 00000719 68 [0000010C]                   	PUSH	LC2
+   776 0000071E FF B3 000000A4                  	PUSH	DWORD [164+EBX]
+   777 00000724 E8 [00000000]                   	CALL	_cons_putstr0
+   778 00000729 E8 [00000000]                   	CALL	_io_cli
+   779 0000072E 8D 43 30                        	LEA	EAX,DWORD [48+EBX]
+   780 00000731 89 43 54                        	MOV	DWORD [84+EBX],EAX
+   781 00000734 C7 43 4C [00000000]             	MOV	DWORD [76+EBX],_asm_end_app
+   782 0000073B E8 [00000000]                   	CALL	_io_sti
+   783 00000740 6A 00                           	PUSH	0
+   784 00000742 6A FF                           	PUSH	-1
+   785 00000744 53                              	PUSH	EBX
+   786 00000745 E8 [00000000]                   	CALL	_task_run
+   787 0000074A 83 C4 14                        	ADD	ESP,20
+   788 0000074D E9 FFFFFC30                     	JMP	L14
+   789 00000752                                 L104:
+   790 00000752 8B 5A 24                        	MOV	EBX,DWORD [36+EDX]
+   791 00000755 6A FF                           	PUSH	-1
+   792 00000757 52                              	PUSH	EDX
+   793 00000758 E8 [00000000]                   	CALL	_sheet_updown
+   794 0000075D 57                              	PUSH	EDI
+   795 0000075E E8 000003F9                     	CALL	_keywin_off
+   796 00000763 8B 95 FFFFFBF0                  	MOV	EDX,DWORD [-1040+EBP]
+   797 00000769 8B 42 10                        	MOV	EAX,DWORD [16+EDX]
+   798 0000076C 8B 7C 82 10                     	MOV	EDI,DWORD [16+EDX+EAX*4]
+   799 00000770 57                              	PUSH	EDI
+   800 00000771 E8 00000414                     	CALL	_keywin_on
+   801 00000776 E8 [00000000]                   	CALL	_io_cli
+   802 0000077B 8D 43 10                        	LEA	EAX,DWORD [16+EBX]
+   803 0000077E 6A 04                           	PUSH	4
+   804 00000780 50                              	PUSH	EAX
+   805 00000781 E8 [00000000]                   	CALL	_fifo32_put
+   806 00000786 E8 [00000000]                   	CALL	_io_sti
+   807 0000078B 83 C4 18                        	ADD	ESP,24
+   808 0000078E E9 FFFFFBEF                     	JMP	L14
+   809 00000793                                 L101:
+   810 00000793 C7 85 FFFFFBE8 00000000         	MOV	DWORD [-1048+EBP],0
+   811 0000079D E9 FFFFFD47                     	JMP	L57
+   812 000007A2                                 L100:
+   813 000007A2 C7 85 FFFFFBEC 00000000         	MOV	DWORD [-1044+EBP],0
+   814 000007AC E9 FFFFFD2B                     	JMP	L56
+   815 000007B1                                 L96:
+   816 000007B1 81 FE 0000017F                  	CMP	ESI,383
+   817 000007B7 0F 8F 000002E6                  	JG	L28
+   818 000007BD 83 BD FFFFFBC8 00               	CMP	DWORD [-1080+EBP],0
+   819 000007C4 0F 85 000002CE                  	JNE	L29
+   820 000007CA 8A 86 [FFFFFF00]                	MOV	AL,BYTE [_keytable0-256+ESI]
+   821 000007D0                                 L92:
+   822 000007D0 88 45 C4                        	MOV	BYTE [-60+EBP],AL
+   823 000007D3                                 L31:
+   824 000007D3 8A 55 C4                        	MOV	DL,BYTE [-60+EBP]
+   825 000007D6 8D 42 BF                        	LEA	EAX,DWORD [-65+EDX]
+   826 000007D9 3C 19                           	CMP	AL,25
+   827 000007DB 77 1D                           	JA	L32
+   828 000007DD F7 85 FFFFFBC4 00000004         	TEST	DWORD [-1084+EBP],4
+   829 000007E7 0F 85 0000029C                  	JNE	L87
+   830 000007ED 83 BD FFFFFBC8 00               	CMP	DWORD [-1080+EBP],0
+   831 000007F4 0F 84 00000284                  	JE	L34
+   832 000007FA                                 L32:
+   833 000007FA 8A 45 C4                        	MOV	AL,BYTE [-60+EBP]
+   834 000007FD 84 C0                           	TEST	AL,AL
+   835 000007FF 74 1B                           	JE	L36
+   836 00000801 85 FF                           	TEST	EDI,EDI
+   837 00000803 74 17                           	JE	L36
+   838 00000805 0F BE C0                        	MOVSX	EAX,AL
+   839 00000808 05 00000100                     	ADD	EAX,256
+   840 0000080D 50                              	PUSH	EAX
+   841 0000080E 8B 47 24                        	MOV	EAX,DWORD [36+EDI]
+   842 00000811 83 C0 10                        	ADD	EAX,16
+   843 00000814 50                              	PUSH	EAX
+   844 00000815 E8 [00000000]                   	CALL	_fifo32_put
+   845 0000081A 58                              	POP	EAX
+   846 0000081B 5A                              	POP	EDX
+   847 0000081C                                 L36:
+   848 0000081C 81 FE 0000010F                  	CMP	ESI,271
+   849 00000822 0F 84 00000221                  	JE	L105
+   850 00000828                                 L37:
+   851 00000828 81 FE 0000012A                  	CMP	ESI,298
+   852 0000082E 0F 84 00000209                  	JE	L106
+   853 00000834                                 L39:
+   854 00000834 81 FE 00000136                  	CMP	ESI,310
+   855 0000083A 0F 84 000001F1                  	JE	L107
+   856 00000840                                 L40:
+   857 00000840 81 FE 000001AA                  	CMP	ESI,426
+   858 00000846 0F 84 000001D9                  	JE	L108
+   859 0000084C                                 L41:
+   860 0000084C 81 FE 000001B6                  	CMP	ESI,438
+   861 00000852 0F 84 000001C1                  	JE	L109
+   862 00000858                                 L42:
+   863 00000858 81 FE 0000013A                  	CMP	ESI,314
+   864 0000085E 0F 84 0000018C                  	JE	L110
+   865 00000864                                 L43:
+   866 00000864 81 FE 00000145                  	CMP	ESI,325
+   867 0000086A 0F 84 00000157                  	JE	L111
+   868 00000870                                 L44:
+   869 00000870 81 FE 00000146                  	CMP	ESI,326
+   870 00000876 0F 84 00000122                  	JE	L112
+   871 0000087C                                 L45:
+   872 0000087C 81 FE 0000013B                  	CMP	ESI,315
+   873 00000882 0F 84 000000B3                  	JE	L113
+   874 00000888                                 L46:
+   875 00000888 81 FE 0000013C                  	CMP	ESI,316
+   876 0000088E 74 5D                           	JE	L114
+   877 00000890                                 L48:
+   878 00000890 81 FE 00000157                  	CMP	ESI,343
+   879 00000896 74 39                           	JE	L115
+   880 00000898                                 L50:
+   881 00000898 81 FE 000001FA                  	CMP	ESI,506
+   882 0000089E 74 25                           	JE	L116
+   883 000008A0                                 L51:
+   884 000008A0 81 FE 000001FE                  	CMP	ESI,510
+   885 000008A6 0F 85 FFFFFAD6                  	JNE	L14
+   886 000008AC E8 [00000000]                   	CALL	_wait_KBC_sendready
+   887 000008B1 FF B5 FFFFFBC0                  	PUSH	DWORD [-1088+EBP]
+   888 000008B7 6A 60                           	PUSH	96
+   889 000008B9 E8 [00000000]                   	CALL	_io_out8
+   890 000008BE 5E                              	POP	ESI
+   891 000008BF 58                              	POP	EAX
+   892 000008C0 E9 FFFFFABD                     	JMP	L14
+   893 000008C5                                 L116:
+   894 000008C5 C7 85 FFFFFBC0 FFFFFFFF         	MOV	DWORD [-1088+EBP],-1
+   895 000008CF EB CF                           	JMP	L51
+   896 000008D1                                 L115:
+   897 000008D1 8B 95 FFFFFBF0                  	MOV	EDX,DWORD [-1040+EBP]
+   898 000008D7 8B 42 10                        	MOV	EAX,DWORD [16+EDX]
+   899 000008DA 83 F8 02                        	CMP	EAX,2
+   900 000008DD 7E B9                           	JLE	L50
+   901 000008DF 48                              	DEC	EAX
+   902 000008E0 50                              	PUSH	EAX
+   903 000008E1 FF 72 18                        	PUSH	DWORD [24+EDX]
+   904 000008E4 E8 [00000000]                   	CALL	_sheet_updown
+   905 000008E9 58                              	POP	EAX
+   906 000008EA 5A                              	POP	EDX
+   907 000008EB EB AB                           	JMP	L50
+   908 000008ED                                 L114:
+   909 000008ED 83 BD FFFFFBC8 00               	CMP	DWORD [-1080+EBP],0
+   910 000008F4 74 9A                           	JE	L48
+   911 000008F6 85 FF                           	TEST	EDI,EDI
+   912 000008F8 74 07                           	JE	L49
+   913 000008FA 57                              	PUSH	EDI
+   914 000008FB E8 0000025C                     	CALL	_keywin_off
+   915 00000900 59                              	POP	ECX
+   916 00000901                                 L49:
+   917 00000901 FF B5 FFFFFBD4                  	PUSH	DWORD [-1068+EBP]
+   918 00000907 FF B5 FFFFFBF0                  	PUSH	DWORD [-1040+EBP]
+   919 0000090D E8 0000034C                     	CALL	_open_console
+   920 00000912 6A 04                           	PUSH	4
+   921 00000914 6A 20                           	PUSH	32
+   922 00000916 89 C7                           	MOV	EDI,EAX
+   923 00000918 50                              	PUSH	EAX
+   924 00000919 E8 [00000000]                   	CALL	_sheet_slide
+   925 0000091E 8B 85 FFFFFBF0                  	MOV	EAX,DWORD [-1040+EBP]
+   926 00000924 FF 70 10                        	PUSH	DWORD [16+EAX]
+   927 00000927 57                              	PUSH	EDI
+   928 00000928 E8 [00000000]                   	CALL	_sheet_updown
+   929 0000092D 57                              	PUSH	EDI
+   930 0000092E E8 00000257                     	CALL	_keywin_on
+   931 00000933 83 C4 20                        	ADD	ESP,32
+   932 00000936 E9 FFFFFF55                     	JMP	L48
+   933 0000093B                                 L113:
+   934 0000093B 83 BD FFFFFBC8 00               	CMP	DWORD [-1080+EBP],0
+   935 00000942 0F 84 FFFFFF40                  	JE	L46
+   936 00000948 85 FF                           	TEST	EDI,EDI
+   937 0000094A 0F 84 FFFFFF38                  	JE	L46
+   938 00000950 8B 5F 24                        	MOV	EBX,DWORD [36+EDI]
+   939 00000953 85 DB                           	TEST	EBX,EBX
+   940 00000955 0F 84 FFFFFF2D                  	JE	L46
+   941 0000095B 83 7B 34 00                     	CMP	DWORD [52+EBX],0
+   942 0000095F 0F 84 FFFFFF23                  	JE	L46
+   943 00000965 68 [0000011D]                   	PUSH	LC1
+   944 0000096A FF B3 000000A4                  	PUSH	DWORD [164+EBX]
+   945 00000970 E8 [00000000]                   	CALL	_cons_putstr0
+   946 00000975 E8 [00000000]                   	CALL	_io_cli
+   947 0000097A 8D 43 30                        	LEA	EAX,DWORD [48+EBX]
+   948 0000097D 89 43 54                        	MOV	DWORD [84+EBX],EAX
+   949 00000980 C7 43 4C [00000000]             	MOV	DWORD [76+EBX],_asm_end_app
+   950 00000987 E8 [00000000]                   	CALL	_io_sti
+   951 0000098C 6A 00                           	PUSH	0
+   952 0000098E 6A FF                           	PUSH	-1
+   953 00000990 53                              	PUSH	EBX
+   954 00000991 E8 [00000000]                   	CALL	_task_run
+   955 00000996 83 C4 14                        	ADD	ESP,20
+   956 00000999 E9 FFFFFEEA                     	JMP	L46
+   957 0000099E                                 L112:
+   958 0000099E 68 000000ED                     	PUSH	237
+   959 000009A3 8D 5D 84                        	LEA	EBX,DWORD [-124+EBP]
+   960 000009A6 53                              	PUSH	EBX
+   961 000009A7 83 B5 FFFFFBC4 01               	XOR	DWORD [-1084+EBP],1
+   962 000009AE E8 [00000000]                   	CALL	_fifo32_put
+   963 000009B3 FF B5 FFFFFBC4                  	PUSH	DWORD [-1084+EBP]
+   964 000009B9 53                              	PUSH	EBX
+   965 000009BA E8 [00000000]                   	CALL	_fifo32_put
+   966 000009BF 83 C4 10                        	ADD	ESP,16
+   967 000009C2 E9 FFFFFEB5                     	JMP	L45
+   968 000009C7                                 L111:
+   969 000009C7 68 000000ED                     	PUSH	237
+   970 000009CC 8D 5D 84                        	LEA	EBX,DWORD [-124+EBP]
+   971 000009CF 53                              	PUSH	EBX
+   972 000009D0 83 B5 FFFFFBC4 02               	XOR	DWORD [-1084+EBP],2
+   973 000009D7 E8 [00000000]                   	CALL	_fifo32_put
+   974 000009DC FF B5 FFFFFBC4                  	PUSH	DWORD [-1084+EBP]
+   975 000009E2 53                              	PUSH	EBX
+   976 000009E3 E8 [00000000]                   	CALL	_fifo32_put
+   977 000009E8 83 C4 10                        	ADD	ESP,16
+   978 000009EB E9 FFFFFE80                     	JMP	L44
+   979 000009F0                                 L110:
+   980 000009F0 68 000000ED                     	PUSH	237
+   981 000009F5 8D 5D 84                        	LEA	EBX,DWORD [-124+EBP]
+   982 000009F8 53                              	PUSH	EBX
+   983 000009F9 83 B5 FFFFFBC4 04               	XOR	DWORD [-1084+EBP],4
+   984 00000A00 E8 [00000000]                   	CALL	_fifo32_put
+   985 00000A05 FF B5 FFFFFBC4                  	PUSH	DWORD [-1084+EBP]
+   986 00000A0B 53                              	PUSH	EBX
+   987 00000A0C E8 [00000000]                   	CALL	_fifo32_put
+   988 00000A11 83 C4 10                        	ADD	ESP,16
+   989 00000A14 E9 FFFFFE4B                     	JMP	L43
+   990 00000A19                                 L109:
+   991 00000A19 83 A5 FFFFFBC8 FD               	AND	DWORD [-1080+EBP],-3
+   992 00000A20 E9 FFFFFE33                     	JMP	L42
+   993 00000A25                                 L108:
+   994 00000A25 83 A5 FFFFFBC8 FE               	AND	DWORD [-1080+EBP],-2
+   995 00000A2C E9 FFFFFE1B                     	JMP	L41
+   996 00000A31                                 L107:
+   997 00000A31 83 8D FFFFFBC8 02               	OR	DWORD [-1080+EBP],2
+   998 00000A38 E9 FFFFFE03                     	JMP	L40
+   999 00000A3D                                 L106:
+  1000 00000A3D 83 8D FFFFFBC8 01               	OR	DWORD [-1080+EBP],1
+  1001 00000A44 E9 FFFFFDEB                     	JMP	L39
+  1002 00000A49                                 L105:
+  1003 00000A49 85 FF                           	TEST	EDI,EDI
+  1004 00000A4B 0F 84 FFFFFDD7                  	JE	L37
+  1005 00000A51 57                              	PUSH	EDI
+  1006 00000A52 E8 00000105                     	CALL	_keywin_off
+  1007 00000A57 8B 4F 18                        	MOV	ECX,DWORD [24+EDI]
+  1008 00000A5A 49                              	DEC	ECX
+  1009 00000A5B 58                              	POP	EAX
+  1010 00000A5C 75 0A                           	JNE	L38
+  1011 00000A5E 8B 85 FFFFFBF0                  	MOV	EAX,DWORD [-1040+EBP]
+  1012 00000A64 8B 48 10                        	MOV	ECX,DWORD [16+EAX]
+  1013 00000A67 49                              	DEC	ECX
+  1014 00000A68                                 L38:
+  1015 00000A68 8B 95 FFFFFBF0                  	MOV	EDX,DWORD [-1040+EBP]
+  1016 00000A6E 8B 7C 8A 14                     	MOV	EDI,DWORD [20+EDX+ECX*4]
+  1017 00000A72 57                              	PUSH	EDI
+  1018 00000A73 E8 00000112                     	CALL	_keywin_on
+  1019 00000A78 5B                              	POP	EBX
+  1020 00000A79 E9 FFFFFDAA                     	JMP	L37
+  1021 00000A7E                                 L34:
+  1022 00000A7E 8D 42 20                        	LEA	EAX,DWORD [32+EDX]
+  1023 00000A81 88 45 C4                        	MOV	BYTE [-60+EBP],AL
+  1024 00000A84 E9 FFFFFD71                     	JMP	L32
+  1025 00000A89                                 L87:
+  1026 00000A89 83 BD FFFFFBC8 00               	CMP	DWORD [-1080+EBP],0
+  1027 00000A90 0F 84 FFFFFD64                  	JE	L32
+  1028 00000A96 EB E6                           	JMP	L34
+  1029 00000A98                                 L29:
+  1030 00000A98 8A 86 [FFFFFF80]                	MOV	AL,BYTE [_keytable1-256+ESI]
+  1031 00000A9E E9 FFFFFD2D                     	JMP	L92
+  1032 00000AA3                                 L28:
+  1033 00000AA3 C6 45 C4 00                     	MOV	BYTE [-60+EBP],0
+  1034 00000AA7 E9 FFFFFD27                     	JMP	L31
+  1035 00000AAC                                 L95:
+  1036 00000AAC 83 BD FFFFFBE4 00               	CMP	DWORD [-1052+EBP],0
+  1037 00000AB3 79 2B                           	JNS	L117
+  1038 00000AB5 81 BD FFFFFBDC 7FFFFFFF         	CMP	DWORD [-1060+EBP],2147483647
+  1039 00000ABF 75 15                           	JNE	L118
+  1040 00000AC1 FF B5 FFFFFBCC                  	PUSH	DWORD [-1076+EBP]
+  1041 00000AC7 E8 [00000000]                   	CALL	_task_sleep
+  1042 00000ACC E8 [00000000]                   	CALL	_io_sti
+  1043 00000AD1 E9 FFFFF9AE                     	JMP	L89
+  1044 00000AD6                                 L118:
+  1045 00000AD6 E8 [00000000]                   	CALL	_io_sti
+  1046 00000ADB E9 FFFFFA8D                     	JMP	L91
+  1047 00000AE0                                 L117:
+  1048 00000AE0 E8 [00000000]                   	CALL	_io_sti
+  1049 00000AE5 FF B5 FFFFFBE0                  	PUSH	DWORD [-1056+EBP]
+  1050 00000AEB FF B5 FFFFFBE4                  	PUSH	DWORD [-1052+EBP]
+  1051 00000AF1 FF B5 FFFFFBD0                  	PUSH	DWORD [-1072+EBP]
+  1052 00000AF7 E8 [00000000]                   	CALL	_sheet_slide
+  1053 00000AFC C7 85 FFFFFBE4 FFFFFFFF         	MOV	DWORD [-1052+EBP],-1
+  1054 00000B06 E9 FFFFF874                     	JMP	L90
+  1055 00000B0B                                 L94:
+  1056 00000B0B 53                              	PUSH	EBX
+  1057 00000B0C E8 [00000000]                   	CALL	_fifo32_get
+  1058 00000B11 89 85 FFFFFBC0                  	MOV	DWORD [-1088+EBP],EAX
+  1059 00000B17 E8 [00000000]                   	CALL	_wait_KBC_sendready
+  1060 00000B1C FF B5 FFFFFBC0                  	PUSH	DWORD [-1088+EBP]
+  1061 00000B22 6A 60                           	PUSH	96
+  1062 00000B24 E8 [00000000]                   	CALL	_io_out8
+  1063 00000B29 83 C4 0C                        	ADD	ESP,12
+  1064 00000B2C E9 FFFFF86C                     	JMP	L17
+  1065 00000B31                                 L2:
+  1066 00000B31 31 F6                           	XOR	ESI,ESI
+  1067 00000B33                                 L8:
+  1068 00000B33 8A 86 [00000000]                	MOV	AL,BYTE [_hankaku+ESI]
+  1069 00000B39 88 04 1E                        	MOV	BYTE [ESI+EBX*1],AL
+  1070 00000B3C 46                              	INC	ESI
+  1071 00000B3D 81 FE 00000FFF                  	CMP	ESI,4095
+  1072 00000B43 7E EE                           	JLE	L8
+  1073 00000B45 BE 00001000                     	MOV	ESI,4096
+  1074 00000B4A                                 L13:
+  1075 00000B4A C6 04 1E FF                     	MOV	BYTE [ESI+EBX*1],-1
+  1076 00000B4E 46                              	INC	ESI
+  1077 00000B4F 81 FE 0002963F                  	CMP	ESI,169535
+  1078 00000B55 7E F3                           	JLE	L13
+  1079 00000B57 E9 FFFFF808                     	JMP	L3
+  1080 00000B5C                                 	GLOBAL	_keywin_off
+  1081 00000B5C                                 _keywin_off:
+  1082 00000B5C 55                              	PUSH	EBP
+  1083 00000B5D 89 E5                           	MOV	EBP,ESP
+  1084 00000B5F 53                              	PUSH	EBX
+  1085 00000B60 6A 00                           	PUSH	0
+  1086 00000B62 8B 5D 08                        	MOV	EBX,DWORD [8+EBP]
+  1087 00000B65 53                              	PUSH	EBX
+  1088 00000B66 E8 [00000000]                   	CALL	_change_wtitle8
+  1089 00000B6B F6 43 1C 20                     	TEST	BYTE [28+EBX],32
+  1090 00000B6F 58                              	POP	EAX
+  1091 00000B70 5A                              	POP	EDX
+  1092 00000B71 75 05                           	JNE	L121
+  1093 00000B73                                 L119:
+  1094 00000B73 8B 5D FC                        	MOV	EBX,DWORD [-4+EBP]
+  1095 00000B76 C9                              	LEAVE
+  1096 00000B77 C3                              	RET
+  1097 00000B78                                 L121:
+  1098 00000B78 6A 03                           	PUSH	3
+  1099 00000B7A 8B 43 24                        	MOV	EAX,DWORD [36+EBX]
+  1100 00000B7D 83 C0 10                        	ADD	EAX,16
+  1101 00000B80 50                              	PUSH	EAX
+  1102 00000B81 E8 [00000000]                   	CALL	_fifo32_put
+  1103 00000B86 59                              	POP	ECX
+  1104 00000B87 5B                              	POP	EBX
+  1105 00000B88 EB E9                           	JMP	L119
+  1106 00000B8A                                 	GLOBAL	_keywin_on
+  1107 00000B8A                                 _keywin_on:
+  1108 00000B8A 55                              	PUSH	EBP
+  1109 00000B8B 89 E5                           	MOV	EBP,ESP
+  1110 00000B8D 53                              	PUSH	EBX
+  1111 00000B8E 6A 01                           	PUSH	1
+  1112 00000B90 8B 5D 08                        	MOV	EBX,DWORD [8+EBP]
+  1113 00000B93 53                              	PUSH	EBX
+  1114 00000B94 E8 [00000000]                   	CALL	_change_wtitle8
+  1115 00000B99 F6 43 1C 20                     	TEST	BYTE [28+EBX],32
+  1116 00000B9D 58                              	POP	EAX
+  1117 00000B9E 5A                              	POP	EDX
+  1118 00000B9F 75 05                           	JNE	L124
+  1119 00000BA1                                 L122:
+  1120 00000BA1 8B 5D FC                        	MOV	EBX,DWORD [-4+EBP]
+  1121 00000BA4 C9                              	LEAVE
+  1122 00000BA5 C3                              	RET
+  1123 00000BA6                                 L124:
+  1124 00000BA6 6A 02                           	PUSH	2
+  1125 00000BA8 8B 43 24                        	MOV	EAX,DWORD [36+EBX]
+  1126 00000BAB 83 C0 10                        	ADD	EAX,16
+  1127 00000BAE 50                              	PUSH	EAX
+  1128 00000BAF E8 [00000000]                   	CALL	_fifo32_put
+  1129 00000BB4 59                              	POP	ECX
+  1130 00000BB5 5B                              	POP	EBX
+  1131 00000BB6 EB E9                           	JMP	L122
+  1132 00000BB8                                 	GLOBAL	_open_constask
+  1133 00000BB8                                 _open_constask:
+  1134 00000BB8 55                              	PUSH	EBP
+  1135 00000BB9 89 E5                           	MOV	EBP,ESP
+  1136 00000BBB 56                              	PUSH	ESI
+  1137 00000BBC 53                              	PUSH	EBX
+  1138 00000BBD E8 [00000000]                   	CALL	_task_alloc
+  1139 00000BC2 68 00000200                     	PUSH	512
+  1140 00000BC7 68 003C0000                     	PUSH	3932160
+  1141 00000BCC 89 C3                           	MOV	EBX,EAX
+  1142 00000BCE E8 [00000000]                   	CALL	_memman_alloc_4k
+  1143 00000BD3 68 00010000                     	PUSH	65536
+  1144 00000BD8 68 003C0000                     	PUSH	3932160
+  1145 00000BDD 89 C6                           	MOV	ESI,EAX
+  1146 00000BDF E8 [00000000]                   	CALL	_memman_alloc_4k
+  1147 00000BE4 8B 55 08                        	MOV	EDX,DWORD [8+EBP]
+  1148 00000BE7 C7 43 4C [00000000]             	MOV	DWORD [76+EBX],_console_task
+  1149 00000BEE 89 83 000000AC                  	MOV	DWORD [172+EBX],EAX
+  1150 00000BF4 05 0000FFF4                     	ADD	EAX,65524
+  1151 00000BF9 89 43 64                        	MOV	DWORD [100+EBX],EAX
+  1152 00000BFC C7 43 74 00000008               	MOV	DWORD [116+EBX],8
+  1153 00000C03 C7 43 78 00000010               	MOV	DWORD [120+EBX],16
+  1154 00000C0A C7 43 7C 00000008               	MOV	DWORD [124+EBX],8
+  1155 00000C11 C7 83 00000080 00000008         	MOV	DWORD [128+EBX],8
+  1156 00000C1B C7 83 00000084 00000008         	MOV	DWORD [132+EBX],8
+  1157 00000C25 C7 83 00000088 00000008         	MOV	DWORD [136+EBX],8
+  1158 00000C2F 89 50 04                        	MOV	DWORD [4+EAX],EDX
+  1159 00000C32 8B 53 64                        	MOV	EDX,DWORD [100+EBX]
+  1160 00000C35 8B 45 0C                        	MOV	EAX,DWORD [12+EBP]
+  1161 00000C38 89 42 08                        	MOV	DWORD [8+EDX],EAX
+  1162 00000C3B 6A 02                           	PUSH	2
+  1163 00000C3D 6A 02                           	PUSH	2
+  1164 00000C3F 53                              	PUSH	EBX
+  1165 00000C40 E8 [00000000]                   	CALL	_task_run
+  1166 00000C45 8D 43 10                        	LEA	EAX,DWORD [16+EBX]
+  1167 00000C48 53                              	PUSH	EBX
+  1168 00000C49 56                              	PUSH	ESI
+  1169 00000C4A 68 00000080                     	PUSH	128
+  1170 00000C4F 50                              	PUSH	EAX
+  1171 00000C50 E8 [00000000]                   	CALL	_fifo32_init
+  1172 00000C55 8D 65 F8                        	LEA	ESP,DWORD [-8+EBP]
+  1173 00000C58 89 D8                           	MOV	EAX,EBX
+  1174 00000C5A 5B                              	POP	EBX
+  1175 00000C5B 5E                              	POP	ESI
+  1176 00000C5C 5D                              	POP	EBP
+  1177 00000C5D C3                              	RET
+  1178                                          [SECTION .data]
+  1179 0000012C                                 LC3:
+  1180 0000012C 63 6F 6E 73 6F 6C 65 00         	DB	"console",0x00
+  1181                                          [SECTION .text]
+  1182 00000C5E                                 	GLOBAL	_open_console
+  1183 00000C5E                                 _open_console:
+  1184 00000C5E 55                              	PUSH	EBP
+  1185 00000C5F 89 E5                           	MOV	EBP,ESP
+  1186 00000C61 56                              	PUSH	ESI
+  1187 00000C62 53                              	PUSH	EBX
+  1188 00000C63 FF 75 08                        	PUSH	DWORD [8+EBP]
+  1189 00000C66 E8 [00000000]                   	CALL	_sheet_alloc
+  1190 00000C6B 68 0000A500                     	PUSH	42240
+  1191 00000C70 68 003C0000                     	PUSH	3932160
+  1192 00000C75 89 C3                           	MOV	EBX,EAX
+  1193 00000C77 E8 [00000000]                   	CALL	_memman_alloc_4k
+  1194 00000C7C 6A FF                           	PUSH	-1
+  1195 00000C7E 68 000000A5                     	PUSH	165
+  1196 00000C83 89 C6                           	MOV	ESI,EAX
+  1197 00000C85 68 00000100                     	PUSH	256
+  1198 00000C8A 50                              	PUSH	EAX
+  1199 00000C8B 53                              	PUSH	EBX
+  1200 00000C8C E8 [00000000]                   	CALL	_sheet_setbuf
+  1201 00000C91 83 C4 20                        	ADD	ESP,32
+  1202 00000C94 6A 00                           	PUSH	0
+  1203 00000C96 68 [0000012C]                   	PUSH	LC3
+  1204 00000C9B 68 000000A5                     	PUSH	165
+  1205 00000CA0 68 00000100                     	PUSH	256
+  1206 00000CA5 56                              	PUSH	ESI
+  1207 00000CA6 E8 [00000000]                   	CALL	_make_window8
+  1208 00000CAB 6A 00                           	PUSH	0
+  1209 00000CAD 68 00000080                     	PUSH	128
+  1210 00000CB2 68 000000F0                     	PUSH	240
+  1211 00000CB7 6A 1C                           	PUSH	28
+  1212 00000CB9 6A 08                           	PUSH	8
+  1213 00000CBB 53                              	PUSH	EBX
+  1214 00000CBC E8 [00000000]                   	CALL	_make_textbox8
+  1215 00000CC1 83 C4 2C                        	ADD	ESP,44
+  1216 00000CC4 FF 75 0C                        	PUSH	DWORD [12+EBP]
+  1217 00000CC7 53                              	PUSH	EBX
+  1218 00000CC8 E8 FFFFFEEB                     	CALL	_open_constask
+  1219 00000CCD 83 4B 1C 20                     	OR	DWORD [28+EBX],32
+  1220 00000CD1 89 43 24                        	MOV	DWORD [36+EBX],EAX
+  1221 00000CD4 8D 65 F8                        	LEA	ESP,DWORD [-8+EBP]
+  1222 00000CD7 89 D8                           	MOV	EAX,EBX
+  1223 00000CD9 5B                              	POP	EBX
+  1224 00000CDA 5E                              	POP	ESI
+  1225 00000CDB 5D                              	POP	EBP
+  1226 00000CDC C3                              	RET
+  1227 00000CDD                                 	GLOBAL	_close_constask
+  1228 00000CDD                                 _close_constask:
+  1229 00000CDD 55                              	PUSH	EBP
+  1230 00000CDE 89 E5                           	MOV	EBP,ESP
+  1231 00000CE0 53                              	PUSH	EBX
+  1232 00000CE1 8B 5D 08                        	MOV	EBX,DWORD [8+EBP]
+  1233 00000CE4 53                              	PUSH	EBX
+  1234 00000CE5 E8 [00000000]                   	CALL	_task_sleep
+  1235 00000CEA 68 00010000                     	PUSH	65536
+  1236 00000CEF FF B3 000000AC                  	PUSH	DWORD [172+EBX]
+  1237 00000CF5 68 003C0000                     	PUSH	3932160
+  1238 00000CFA E8 [00000000]                   	CALL	_memman_free_4k
+  1239 00000CFF 68 00000200                     	PUSH	512
+  1240 00000D04 FF 73 10                        	PUSH	DWORD [16+EBX]
+  1241 00000D07 68 003C0000                     	PUSH	3932160
+  1242 00000D0C E8 [00000000]                   	CALL	_memman_free_4k
+  1243 00000D11 C7 43 04 00000000               	MOV	DWORD [4+EBX],0
+  1244 00000D18 8B 5D FC                        	MOV	EBX,DWORD [-4+EBP]
+  1245 00000D1B C9                              	LEAVE
+  1246 00000D1C C3                              	RET
+  1247 00000D1D                                 	GLOBAL	_close_console
+  1248 00000D1D                                 _close_console:
+  1249 00000D1D 55                              	PUSH	EBP
+  1250 00000D1E 89 E5                           	MOV	EBP,ESP
+  1251 00000D20 56                              	PUSH	ESI
+  1252 00000D21 53                              	PUSH	EBX
+  1253 00000D22 8B 5D 08                        	MOV	EBX,DWORD [8+EBP]
+  1254 00000D25 8B 73 24                        	MOV	ESI,DWORD [36+EBX]
+  1255 00000D28 68 0000A500                     	PUSH	42240
+  1256 00000D2D FF 33                           	PUSH	DWORD [EBX]
+  1257 00000D2F 68 003C0000                     	PUSH	3932160
+  1258 00000D34 E8 [00000000]                   	CALL	_memman_free_4k
+  1259 00000D39 53                              	PUSH	EBX
+  1260 00000D3A E8 [00000000]                   	CALL	_sheet_free
+  1261 00000D3F 89 75 08                        	MOV	DWORD [8+EBP],ESI
+  1262 00000D42 83 C4 10                        	ADD	ESP,16
+  1263 00000D45 8D 65 F8                        	LEA	ESP,DWORD [-8+EBP]
+  1264 00000D48 5B                              	POP	EBX
+  1265 00000D49 5E                              	POP	ESI
+  1266 00000D4A 5D                              	POP	EBP
+  1267 00000D4B EB 90                           	JMP	_close_constask
